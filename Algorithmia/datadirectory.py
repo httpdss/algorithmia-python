@@ -3,9 +3,8 @@
 import json
 import re
 import six
-import tempfile
 
-import Algorithmia
+
 from Algorithmia.datafile import DataFile
 from Algorithmia.data import DataObject, DataObjectType
 from Algorithmia.util import getParentAndBase, pathJoin

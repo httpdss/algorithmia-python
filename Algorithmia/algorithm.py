@@ -1,6 +1,6 @@
 'Algorithmia Algorithm API Client (python)'
+"""
 
-import base64
 import re
 from Algorithmia.async_response import AsyncResponse
 from Algorithmia.algo_response import AlgoResponse
