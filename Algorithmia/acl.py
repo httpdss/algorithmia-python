@@ -14,8 +14,9 @@ class Acl(object):
     def to_api_param(self):
         read_acl_string = self.read_acl.acl_string
         if read_acl_string is None:
-            return {'read':[]}
-        return {'read':[read_acl_string]}
+            return {'read': []}
+        return {'read': [read_acl_string]}
+
 
 class AclInner(object):
     def __init__(self, pseudonym, acl_string):
@@ -28,9 +29,10 @@ class AclInner(object):
 
 
 class AclType(object):
-    public = AclInner('public','user://*')
-    my_algos = AclInner('my_algos','algo://.my/*')
-    private = AclInner('private',None)  # Really is an empty list
+
+    public = AclInner('public', 'user://*')
+    my_algos = AclInner('my_algos', 'algo://.my/*')
+    private = AclInner('private', None)  # Really is an empty list
     default = my_algos
 
     types = (public, my_algos, private)

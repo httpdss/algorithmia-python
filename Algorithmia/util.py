@@ -22,6 +22,7 @@ def getParentAndBase(path):
 
     return parent, base
 
+
 def pathJoin(parent, base):
     if parent.endswith('/'):
         return parent + base

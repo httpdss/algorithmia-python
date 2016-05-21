@@ -1,13 +1,16 @@
 import sys
+import unittest
+import os
+
 sys.path.append("../")
 
-import unittest
 import Algorithmia
 from Algorithmia.acl import AclType, Acl, ReadAcl
 from Algorithmia.datadirectory import DataDirectory
-import os
+
 
 class AclTypeTest(unittest.TestCase):
+
     def test_types(self):
         self.assertTrue(AclType.private.acl_string is None)
         self.assertEquals(AclType.my_algos.acl_string, 'algo://.my/*')

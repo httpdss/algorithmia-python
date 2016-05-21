@@ -1,4 +1,5 @@
-'Algorithmia Algorithm API Client (python)'
+"""
+Algorithmia Algorithm API Client (python)
 """
 
 import re
@@ -6,7 +7,8 @@ from Algorithmia.async_response import AsyncResponse
 from Algorithmia.algo_response import AlgoResponse
 from enum import Enum
 
-OutputType = Enum('OutputType','default raw void')
+OutputType = Enum('OutputType', 'default raw void')
+
 
 class Algorithm(object):
     def __init__(self, client, algoRef):
@@ -22,8 +24,13 @@ class Algorithm(object):
         else:
             raise Exception('Invalid algorithm URI: ' + algoRef)
 
-    def set_options(self, timeout=300, stdout=False, output=OutputType.default, **query_parameters):
-        self.query_parameters = {'timeout':timeout, 'stdout':stdout}
+    def set_options(self,
+                    timeout=300,
+                    stdout=False,
+                    output=OutputType.default,
+                    **query_parameters):
+        self.query_parameters = {'timeout': timeout,
+                                 'stdout': stdout}
         self.output_type = output
         self.query_parameters.update(query_parameters)
         return self
@@ -36,12 +43,18 @@ class Algorithm(object):
         elif self.output_type == OutputType.void:
             return self._postVoidOutput(input1)
         else:
-            return AlgoResponse.create_algo_response(self.client.postJsonHelper(self.url, input1, **self.query_parameters))
+            post_json_helper = self.client.postJsonHelper(self.url,
+                                                          input1,
+                                                          **self.query_parameters)
+            return AlgoResponse.create_algo_response(post_json_helper)
 
     def _postRawOutput(self, input1):
             # Don't parse response as json
             self.query_parameters['output'] = 'raw'
-            response = self.client.postJsonHelper(self.url, input1, parse_response_as_json=False, **self.query_parameters)
+            response = self.client.postJsonHelper(self.url,
+                                                  input1,
+                                                  parse_response_as_json=False,
+                                                  **self.query_parameters)
             # Check HTTP code and throw error as needed
             if response.status_code == 400:
                 # Bad request
@@ -53,7 +66,9 @@ class Algorithm(object):
 
     def _postVoidOutput(self, input1):
             self.query_parameters['output'] = 'void'
-            responseJson = self.client.postJsonHelper(self.url, input1, **self.query_parameters)
+            responseJson = self.client.postJsonHelper(self.url,
+                                                      input1,
+                                                      **self.query_parameters)
             if 'error' in responseJson:
                 raise Exception(responseJson['error']['message'])
             else:

@@ -1,12 +1,14 @@
 import sys
-sys.path.append("../")
-
 import unittest
-
-import Algorithmia
 import os
 
+sys.path.append("../")
+
+import Algorithmia
+
+
 class DataDirectoryTest(unittest.TestCase):
+
     def setUp(self):
         self.client = Algorithmia.client(os.environ['ALGORITHMIA_API_KEY'])
 

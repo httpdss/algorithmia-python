@@ -10,6 +10,7 @@ from Algorithmia.data import DataObject, DataObjectType
 from Algorithmia.util import getParentAndBase, pathJoin
 from Algorithmia.acl import Acl
 
+
 class DataDirectory(DataObject):
     def __init__(self, client, dataUrl):
         super(DataDirectory, self).__init__(DataObjectType.directory)
@@ -36,12 +37,17 @@ class DataDirectory(DataObject):
         return (response.status_code == 200)
 
     def create(self, acl=None):
-        '''Creates a directory, optionally include Acl argument to set permissions'''
+        """
+        Creates a directory, optionally include
+        Acl argument to set permissions
+        """
         parent, name = getParentAndBase(self.path)
-        json = { 'name': name }
+        json = {'name': name}
         if acl is not None:
             json['acl'] = acl.to_api_param()
-        response = self.client.postJsonHelper(DataDirectory._getUrl(parent), json, False)
+        response = self.client.postJsonHelper(DataDirectory._getUrl(parent),
+                                              json,
+                                              False)
         if (response.status_code != 200):
             raise Exception("Directory creation failed: " + str(response.content))
 
@@ -71,7 +77,8 @@ class DataDirectory(DataObject):
 
     def get_permissions(self):
         '''
-        Returns permissions for this directory or None if it's a special collection such as
+        Returns permissions for this directory or
+        None if it's a special collection such as
         .session or .algo
         '''
         response = self.client.getHelper(self.url, acl='true')
@@ -84,10 +91,10 @@ class DataDirectory(DataObject):
             return None
 
     def update_permissions(self, acl):
-        params = {'acl':acl.to_api_param()}
+        params = {'acl': acl.to_api_param()}
         response = self.client.patchHelper(self.url, params)
         if response.status_code != 200:
-            raise Exception('Unable to update permissions: ' + response.json()['error']['message'])
+            raise Exception('Unable to update permissions: {0}'.format(response.json()['error']['message']))
         return True
 
     def _get_directory_iterator(self, type_filter=None):
@@ -96,7 +103,7 @@ class DataDirectory(DataObject):
         while first or (marker is not None and len(marker) > 0):
             first = False
             url = self.url
-            query_params= {}
+            query_params = {}
             if marker:
                 query_params['marker'] = marker
             response = self.client.getHelper(url, **query_params)
@@ -124,7 +131,8 @@ class DataDirectory(DataObject):
         directories = []
         if 'folders' in content:
             for dir_info in content['folders']:
-                d = DataDirectory(self.client, pathJoin(self.path, dir_info['name']))
+                d = DataDirectory(self.client,
+                                  pathJoin(self.path, dir_info['name']))
                 d.set_attributes(dir_info)
                 directories.append(d)
         return directories
@@ -133,7 +141,8 @@ class DataDirectory(DataObject):
         files = []
         if 'files' in content:
             for file_info in content['files']:
-                f = DataFile(self.client, pathJoin(self.path, file_info['filename']))
+                f = DataFile(self.client,
+                             pathJoin(self.path, file_info['filename']))
                 f.set_attributes(file_info)
                 files.append(f)
         return files

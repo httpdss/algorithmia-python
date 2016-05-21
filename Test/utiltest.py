@@ -1,12 +1,12 @@
 import sys
-sys.path.append("../")
-
 import unittest
 
-import Algorithmia
+sys.path.append("../")
+
 from Algorithmia.util import getParentAndBase, pathJoin
 
 class UtilTest(unittest.TestCase):
+
     def test_getParentAndBase(self):
         self.assertEqual(('a/b', 'c'), getParentAndBase('a/b/c'))
         self.assertEqual(('a/b', 'c'), getParentAndBase('a/b/c///'))

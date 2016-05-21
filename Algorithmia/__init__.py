@@ -1,39 +1,59 @@
-'Algorithmia API Client (python)'
+"""
+Algorithmia API Client (python)
+"""
+
+import os
 
 from Algorithmia.client import Client
-import os
 
 apiKey = None
 apiAddress = None
 
-# Get reference to an algorithm using a default client
+
 def algo(algoRef):
+    """
+    Get reference to an algorithm using a default client
+    """
+
     # Return algorithm reference using default client
     return getDefaultClient().algo(algoRef)
+
 
 def file(dataUrl):
     return getDefaultClient().file(dataUrl)
 
+
 def dir(dataUrl):
     return getDefaultClient().dir(dataUrl)
+
 
 def client(api_key=None, api_address=None):
     return Client(api_key, api_address)
 
-# The default client to use, assuming the user does not want to construct their own
+# The default client to use, assuming the
+# user does not want to construct their own
 defaultClient = None
 
-# Used internally to get default client
+
 def getDefaultClient():
+    """
+    Used internally to get default client
+    """
+
     global defaultClient
+    
     # Check for default client, and ensure default API key has not changed
     if defaultClient is None or defaultClient.apiKey is not apiKey:
         # Construct default client
         defaultClient = Client(apiKey)
     return defaultClient
 
-# Used internally to get default api client
+
 def getApiAddress():
+    """
+    Used internally to get default api client
+    """
+
     global apiAddress
     if apiAddress is not None:
         # First check for user setting Algorithmia.apiAddress = "XXX"

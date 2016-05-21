@@ -1,5 +1,6 @@
 import base64
 
+
 class AlgoResponse(object):
     def __init__(self, result, metadata):
         self.result = result
@@ -36,6 +37,7 @@ class AlgoException(Exception):
 
     def __str__(self):
         return self.message
+
 
 class Metadata(object):
     def __init__(self, metadata):

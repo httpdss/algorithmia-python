@@ -1,4 +1,4 @@
-'Algorithmia Data API Client (python)'
+"""Algorithmia Data API Client (python)"""
 
 import re
 import json
@@ -9,7 +9,9 @@ from datetime import datetime
 from Algorithmia.util import getParentAndBase
 from Algorithmia.data import DataObject, DataObjectType
 
+
 class DataFile(DataObject):
+
     def __init__(self, client, dataUrl):
         super(DataFile, self).__init__(DataObjectType.file)
         self.client = client
@@ -20,20 +22,24 @@ class DataFile(DataObject):
         self.size = None
 
     def set_attributes(self, attributes):
-        self.last_modified = datetime.strptime(attributes['last_modified'],'%Y-%m-%dT%H:%M:%S.000Z')
+        self.last_modified = datetime.strptime(attributes['last_modified'],
+                                               '%Y-%m-%dT%H:%M:%S.000Z')
         self.size = attributes['size']
 
     # Deprecated:
     def get(self):
         return self.client.getHelper(self.url)
 
-    # Get file from the data api
     def getFile(self):
+        """
+        Get file from the data api
+        """
+
         if not self.exists():
             raise Exception('file does not exist - {}'.format(self.path))
         # Make HTTP get request
         response = self.client.getHelper(self.url)
-        with tempfile.NamedTemporaryFile(delete = False) as f:
+        with tempfile.NamedTemporaryFile(delete=False) as f:
             for block in response.iter_content(1024):
                 if not block:
                     break
