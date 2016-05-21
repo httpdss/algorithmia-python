@@ -7,4 +7,5 @@ class AsyncResponse(object):
         self.request_id = server_response['request_id']
 
     def __repr__(self):
-        return 'AsyncResponse(async_protocol=%s, request_id=%s)' % (self.async_protocol, self.request_id) 
+        return 'AsyncResponse(async_protocol={0}, request_id={1})'.format(self.async_protocol,
+                                                                          self.request_id)

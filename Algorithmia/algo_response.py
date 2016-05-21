@@ -6,7 +6,8 @@ class AlgoResponse(object):
         self.metadata = metadata
 
     def __repr__(self):
-        return 'AlgoResponse(result=%s,metadata=%s)' % (self.result, self.metadata)
+        return 'AlgoResponse(result={0},metadata={1})'.format(self.result,
+                                                              self.metadata)
 
     @staticmethod
     def create_algo_response(responseJson):
@@ -46,4 +47,6 @@ class Metadata(object):
         self.full_metadata = metadata
 
     def __repr__(self):
-        return "Metadata(content_type='%s',duration=%s,stdout=%s)" % (self.content_type, self.duration, self.stdout)
+        return "Metadata(content_type='{0}',duration={1},stdout={2})".format(self.content_type,
+                                                                             self.duration,
+                                                                             self.stdout)

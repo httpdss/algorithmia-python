@@ -23,7 +23,9 @@ class AclInner(object):
         self.acl_string = acl_string
 
     def __repr__(self):
-        return 'AclType(pseudonym=%s,acl_string=%s)' % (self.pseudonym, self.acl_string)
+        return 'AclType(pseudonym={0},acl_string={1})'.format(self.pseudonym,
+                                                              self.acl_string)
+
 
 class AclType(object):
     public = AclInner('public','user://*')
@@ -43,7 +45,8 @@ class AclType(object):
                 if t.acl_string == acl_string:
                     return t
             else:
-                raise Exception('Invalid acl string %s' % (acl_list[0]))
+                raise Exception('Invalid acl string {0}'.format(acl_list[0]))
+
 
 class ReadAcl(object):
     public = Acl(AclType.public)
