@@ -36,7 +36,7 @@ class DataFile(DataObject):
         with tempfile.NamedTemporaryFile(delete = False) as f:
             for block in response.iter_content(1024):
                 if not block:
-                    break;
+                    break
                 f.write(block)
             f.flush()
             return open(f.name)
